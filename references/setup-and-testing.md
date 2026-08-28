@@ -3,12 +3,54 @@
 Bu referansı skill'i kurarken, hedef oyunun toolchain'ini hazırlarken veya oyunu
 YouTube ortamına göndermeden önce test ederken kullan.
 
-## 1. Skill'i Codex'e kurma
+## 1. Skill'i AI agent'a kurma
 
 GitHub repository yayınlandıktan sonra `<owner>` alanını gerçek GitHub kullanıcı
 veya organization adıyla değiştir.
 
-### Git ile kurulum
+### NPX ile önerilen kurulum
+
+Open Agent Skills CLI, aynı repository'yi Codex, Claude Code, Cursor, OpenCode ve
+desteklediği diğer agent'ların uygun skill dizinine kurabilir:
+
+```bash
+npx skills add <owner>/youtube-playables-guide
+```
+
+Varsayılan kurulum proje kapsamındadır. Bütün projelerde kullanmak için global
+kurulum seç:
+
+```bash
+npx skills add <owner>/youtube-playables-guide -g
+```
+
+Belirli bir agent hedeflenebilir:
+
+```bash
+npx skills add <owner>/youtube-playables-guide -g -a codex
+```
+
+Önce repository'de bulunan skill'leri görmek için:
+
+```bash
+npx skills add <owner>/youtube-playables-guide --list
+```
+
+CLI'ın sistemde kalıcı olması tercih edilirse:
+
+```bash
+npm install --global skills
+skills add <owner>/youtube-playables-guide -g
+```
+
+İlk `--global` NPM CLI paketini sisteme, ikinci komuttaki `-g` ise skill'i seçilen
+AI agent için bütün projelerde kullanılacak konuma kurar.
+
+Bu komutlar `skills` adlı kurulum CLI'ını NPX üzerinden çalıştırır; Playables SDK
+kodunu NPM registry'den yüklemez. Kaynağı yine GitHub repository ve içindeki
+`SKILL.md` dosyasıdır.
+
+### Codex için manuel Git kurulumu
 
 Windows PowerShell:
 
@@ -34,11 +76,12 @@ Manuel alternatif olarak repository'yi indirip klasörün tamamını aynı
 `youtube-playables-guide` hedef dizinine kopyala. Yalnız `SKILL.md` dosyasını
 kopyalama; `references/` ve `scripts/` da gereklidir.
 
-## 2. NPM gerekiyor mu?
+## 2. Skill kurulumu ile oyun dependency'lerini ayır
 
-YouTube Playables SDK için `npm install` gerekmez ve varsayımsal bir YouTube SDK
-paketi yüklenmemelidir. Resmî SDK, bütün oyun kodundan önce `index.html` içine
-eklenen şu script ile gelir:
+Skill'i dağıtmak için `npx skills add` kullanılabilir. Buna karşılık YouTube
+Playables SDK için `npm install` gerekmez ve varsayımsal bir YouTube SDK paketi
+yüklenmemelidir. Resmî SDK, bütün oyun kodundan önce `index.html` içine eklenen şu
+script ile gelir:
 
 ```html
 <script src="https://www.youtube.com/game_api/v1"></script>
@@ -150,3 +193,8 @@ Dependency/toolchain tespiti
 - [Test Suite guide and CSP](https://developers.google.com/youtube/gaming/playables/reference/test_suite_guide)
 - [Developer Portal testing workflow](https://developers.google.com/youtube/gaming/playables/developer_portal)
 - [Revision history](https://developers.google.com/youtube/gaming/playables/certification/revisionhistory)
+
+## Agent Skill kaynakları
+
+- [OpenAI: Build skills](https://learn.chatgpt.com/docs/build-skills)
+- [Open Agent Skills CLI](https://github.com/vercel-labs/skills)

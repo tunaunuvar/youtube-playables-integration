@@ -1,21 +1,22 @@
 # YouTube Playables Guide
 
-An AI-agent skill repository for adapting, auditing, packaging, and testing web
-games for YouTube Playables. It combines actionable agent instructions,
+An open Agent Skills repository for adapting, auditing, packaging, and testing
+web games for YouTube Playables. It combines actionable agent instructions,
 human-readable guidance, official-source references, a release checklist, and a
 dependency-free bundle validator.
 
 ## What this repository is
 
-This is primarily a **Codex skill**: install the complete repository and invoke
-`$youtube-playables-guide` in a game project. The agent is instructed to inspect
-the actual project, preserve its engine and package manager, implement the
-integration, run available checks, and return an evidence-based readiness
-report—not merely explain the API.
+This is an **Agent Skill** following the open `SKILL.md` format used by Codex,
+Claude Code, Cursor, OpenCode, and other compatible coding agents. Install the
+complete repository and invoke `$youtube-playables-guide` in a game project. The
+agent is instructed to inspect the actual project, preserve its engine and
+package manager, implement the integration, run available checks, and return an
+evidence-based readiness report—not merely explain the API.
 
-The Markdown references are also useful as standalone documentation. Other AI
-agents can consume them when their skill system supports a `SKILL.md`-style
-instruction package, but product-specific installation may differ.
+`agents/openai.yaml` adds optional Codex/ChatGPT presentation metadata; the core
+`SKILL.md`, references, and scripts remain portable. The Markdown references are
+also useful as standalone human documentation.
 
 The skill covers the full path from an existing HTML5/Canvas/WebGL or engine web
 export to a certification-readiness report:
@@ -30,10 +31,48 @@ export to a certification-readiness report:
 - Test Suite, real-device QA, Developer Portal and certification workflow
 - Trust & Safety, audience, metadata and rights checks
 
-## Install as a Codex skill
+## Install with NPX
 
 After publishing the repository, replace `<owner>` with the GitHub account or
-organization name and clone the complete repository:
+organization name. The open Agent Skills CLI can install the GitHub repository
+without this project publishing a separate NPM package:
+
+```bash
+npx skills add <owner>/youtube-playables-guide
+```
+
+The interactive installer detects supported agents and lets the user choose
+installation targets. Install globally for all projects with:
+
+```bash
+npx skills add <owner>/youtube-playables-guide -g
+```
+
+Install explicitly for Codex with:
+
+```bash
+npx skills add <owner>/youtube-playables-guide -g -a codex
+```
+
+Use `--list` first to inspect the skills found in the repository:
+
+```bash
+npx skills add <owner>/youtube-playables-guide --list
+```
+
+If a persistent system-wide CLI is preferred instead of NPX:
+
+```bash
+npm install --global skills
+skills add <owner>/youtube-playables-guide -g
+```
+
+Here the first `--global` installs the CLI; the later `-g` installs the skill for
+all projects supported by the selected AI agent.
+
+## Manual Codex installation
+
+Git remains available as a fallback:
 
 ```powershell
 git clone https://github.com/<owner>/youtube-playables-guide.git "$env:USERPROFILE\.codex\skills\youtube-playables-guide"
@@ -54,9 +93,9 @@ $youtube-playables-guide
 It can also be selected automatically for YouTube Playables integration,
 compliance, packaging, and certification-readiness tasks.
 
-The skill itself and the YouTube Playables SDK do **not** require an NPM
-installation. NPM, pnpm, or Yarn is used only when the target game's existing
-build system requires it. See
+The skill can be distributed with `npx skills`, but the YouTube Playables SDK
+itself is **not** an NPM dependency. NPM, pnpm, or Yarn is used in a game project
+only when that project's existing build system requires it. See
 [setup-and-testing.md](references/setup-and-testing.md) for lockfile-aware
 dependency commands, local serving, and the full test sequence.
 
@@ -133,3 +172,8 @@ before submission.
 
 This repository provides implementation guidance and automated preflight checks;
 it does not guarantee acceptance by YouTube.
+
+## Skill ecosystem
+
+- [OpenAI: Build skills](https://learn.chatgpt.com/docs/build-skills)
+- [Open Agent Skills CLI](https://github.com/vercel-labs/skills)
