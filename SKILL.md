@@ -45,6 +45,9 @@ körlemesine kopyalama.
 
 ## Referans yönlendirmesi
 
+- Skill kurulumu, NPM/pnpm/Yarn dependency hazırlığı, local server veya resmî
+  test ortamı gerektiğinde
+  [setup-and-testing.md](references/setup-and-testing.md) dosyasını oku.
 - Her planlama veya audit görevinde
   [official-requirements.md](references/official-requirements.md) dosyasını oku.
 - SDK bridge, lifecycle, cloud save, score, pause/audio veya ads kodlarken
@@ -74,9 +77,13 @@ körlemesine kopyalama.
 5. Responsive/input/accessibility gereksinimlerini gerçek viewport ve cihaz
    davranışıyla ele al.
 6. Temiz release output'u üret; debug/cheat/local ad simulation dosyalarını çıkar.
-7. Bundle validator, syntax/unit test, CSP testi, temiz profil ve Test Suite
-   senaryolarını çalıştır.
-8. Portal gerektiren kontrolleri ayrı işaretle; tahmin ederek PASS verme.
+7. Bundle validator, syntax/unit test, CSP testi ve temiz profil senaryolarını
+   çalıştır; ardından oyunu resmî çevrimiçi
+   [Playables Test Suite](https://developers.google.com/youtube/gaming/playables/test_suite)
+   içinde doğrula.
+8. Portal release'i varsa **Verify and test** bölümündeki Test Suite Link ve
+   YouTube Dev Link ile desktop web, mobile web, Android ve iOS testlerini yap.
+9. Portal gerektiren kontrolleri ayrı işaretle; tahmin ederek PASS verme.
 
 ## Teslim formatı
 

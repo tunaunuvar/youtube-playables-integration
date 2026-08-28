@@ -51,9 +51,13 @@ Her maddeyi `PASS`, `FAIL`, `NEEDS PORTAL` veya `UNVERIFIED` olarak işaretle.
 
 ## Doğrulama ve Portal
 
+- [ ] Target projenin mevcut lockfile/package manager'ı korundu; gereksiz veya
+  varsayımsal YouTube SDK NPM paketi eklenmedi.
 - [ ] `scripts/validate_playables_bundle.py` son ZIP üzerinde PASS.
-- [ ] Test Suite CSP ve tüm lifecycle senaryoları PASS.
+- [ ] [Açık Playables Test Suite](https://developers.google.com/youtube/gaming/playables/test_suite)
+  üzerinde localhost/build ve güncel CSP kontrolleri PASS.
+- [ ] Portal **Verify and test** içindeki Test Suite Link ile ingested build PASS.
+- [ ] YouTube Dev Link ile gerçek YouTube ortamı smoke testi PASS.
 - [ ] Desktop web, mobile web, Android ve iOS test edildi.
 - [ ] Portal metadata, thumbnail, monetization ve accessibility alanları tamam.
 - [ ] Gönderim günü revision history ve canlı İngilizce gereksinimler kontrol edildi.
-

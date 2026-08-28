@@ -18,11 +18,17 @@ export to a certification-readiness report:
 
 ## Install as a Codex skill
 
-Copy this repository to the local Codex skills directory:
+After publishing the repository, replace `<owner>` with the GitHub account or
+organization name and clone the complete repository:
 
-```text
-Windows: %USERPROFILE%\.codex\skills\youtube-playables-integration
-macOS/Linux: ~/.codex/skills/youtube-playables-integration
+```powershell
+git clone https://github.com/<owner>/youtube-playables-integration.git "$env:USERPROFILE\.codex\skills\youtube-playables-integration"
+```
+
+On macOS/Linux:
+
+```bash
+git clone https://github.com/<owner>/youtube-playables-integration.git "${CODEX_HOME:-$HOME/.codex}/skills/youtube-playables-integration"
 ```
 
 Invoke it explicitly with:
@@ -33,6 +39,12 @@ $youtube-playables-integration
 
 It can also be selected automatically for YouTube Playables integration,
 compliance, packaging, and certification-readiness tasks.
+
+The skill itself and the YouTube Playables SDK do **not** require an NPM
+installation. NPM, pnpm, or Yarn is used only when the target game's existing
+build system requires it. See
+[setup-and-testing.md](references/setup-and-testing.md) for lockfile-aware
+dependency commands, local serving, and the full test sequence.
 
 ## Repository structure
 
@@ -46,6 +58,7 @@ youtube-playables-integration/
 │   └── test_validator.py
 └── references/
     ├── official-requirements.md
+    ├── setup-and-testing.md
     ├── implementation-guide.md
     ├── game-design-and-accessibility.md
     ├── engine-notes.md
@@ -73,6 +86,18 @@ Run the validator tests with:
 python -m unittest discover -s tests -v
 ```
 
+## Test the game in YouTube's environment
+
+Start the release build on a local HTTP server, then open the official
+[YouTube Playables SDK Test Suite](https://developers.google.com/youtube/gaming/playables/test_suite).
+The SDK is a no-op during ordinary local serving, so a local smoke test alone
+cannot validate the Playables integration.
+
+After uploading a release through the invitation-only Developer Portal, open
+**Verify and test** and use its **Test Suite Link** and **YouTube Dev Link**.
+Test the latter on desktop web, mobile web, YouTube for Android, and YouTube for
+iOS before submitting for certification.
+
 ## Authority and freshness
 
 Official English Google/YouTube documentation is authoritative. The bundled
@@ -88,6 +113,7 @@ before submission.
 - [SDK reference](https://developers.google.com/youtube/gaming/playables/reference/sdk)
 - [Certification requirements](https://developers.google.com/youtube/gaming/playables/certification/requirements)
 - [Test Suite guide](https://developers.google.com/youtube/gaming/playables/reference/test_suite_guide)
+- [Open Playables Test Suite](https://developers.google.com/youtube/gaming/playables/test_suite)
 - [Developer Portal](https://developers.google.com/youtube/gaming/playables/developer_portal)
 - [Official web-game samples](https://github.com/google/web-game-samples)
 

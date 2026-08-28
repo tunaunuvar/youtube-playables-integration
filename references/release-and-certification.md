@@ -23,6 +23,11 @@ yayın sonucu garanti edilemez.
 
 ## 3. Test Suite ve cihaz testi
 
+Yerel release'i HTTP ile serve ettikten sonra doğrudan
+[resmî Playables Test Suite'i](https://developers.google.com/youtube/gaming/playables/test_suite)
+aç ve çalışan localhost URL'sini test et. Ayrıntılı kurulum ve sıralama için
+[setup-and-testing.md](setup-and-testing.md) dosyasını uygula.
+
 Resmî Test Suite ile en az şunları kontrol et:
 
 - SDK load/order, lifecycle, audio, pause/resume, save/load ve score.
@@ -65,7 +70,9 @@ doğru kabul etme.
 1. ZIP, gerekli thumbnail oranları ve doğru metadata'yı yükle.
 2. Ads/monetization ve erişilebilirlik alanlarını güncel Portal seçenekleriyle
    doldur; dokümanda bulunmayan tag adlarını uydurma.
-3. Portal preview ve desteklenen cihazlarda smoke test yap.
+3. Release oluşturulduktan sonra **Verify and test** bölümündeki **Test Suite
+   Link** ile ingested build'i, **YouTube Dev Link** ile desktop/mobile web ve
+   YouTube Android/iOS uygulamalarını test et.
 4. Certification'a gönder. Aynı anda yalnız bir certification review kısıtı
    bulunabileceğini planlamaya dahil et.
 5. Ret gerekçesini requirement ID ve reproducible case olarak kaydet; düzeltip
@@ -75,8 +82,8 @@ doğru kabul etme.
 
 - [Developer Portal](https://developers.google.com/youtube/gaming/playables/developer_portal)
 - [Test Suite guide](https://developers.google.com/youtube/gaming/playables/reference/test_suite_guide)
+- [Open Playables Test Suite](https://developers.google.com/youtube/gaming/playables/test_suite)
 - [Certification FAQ](https://developers.google.com/youtube/gaming/playables/support/certification_faq)
 - [Trust and safety](https://developers.google.com/youtube/gaming/playables/certification/requirements_trustsafety)
 - [Monetization requirements](https://developers.google.com/youtube/gaming/playables/certification/requirements_monetization)
 - [Revision history](https://developers.google.com/youtube/gaming/playables/certification/revisionhistory)
-
