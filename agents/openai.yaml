@@ -1,0 +1,7 @@
+interface:
+  display_name: "YouTube Playables Integration"
+  short_description: "Integrate HTML5 games with YouTube Playables"
+  default_prompt: "Use $youtube-playables-integration to adapt this HTML5 game for YouTube Playables."
+
+policy:
+  allow_implicit_invocation: true
