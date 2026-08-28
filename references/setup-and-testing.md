@@ -13,25 +13,25 @@ veya organization adıyla değiştir.
 Windows PowerShell:
 
 ```powershell
-git clone https://github.com/<owner>/youtube-playables-integration.git "$env:USERPROFILE\.codex\skills\youtube-playables-integration"
+git clone https://github.com/<owner>/youtube-playables-guide.git "$env:USERPROFILE\.codex\skills\youtube-playables-guide"
 ```
 
 macOS/Linux:
 
 ```bash
-git clone https://github.com/<owner>/youtube-playables-integration.git "${CODEX_HOME:-$HOME/.codex}/skills/youtube-playables-integration"
+git clone https://github.com/<owner>/youtube-playables-guide.git "${CODEX_HOME:-$HOME/.codex}/skills/youtube-playables-guide"
 ```
 
 Güncellemek için skill klasöründe `git pull` çalıştır. Kurulumdan sonra yeni bir
 Codex görevi açıp skill'i açıkça çağır:
 
 ```text
-$youtube-playables-integration bu web oyununu YouTube Playables için hazırla,
+$youtube-playables-guide bu web oyununu YouTube Playables için hazırla,
 paketle ve readiness raporu çıkar.
 ```
 
 Manuel alternatif olarak repository'yi indirip klasörün tamamını aynı
-`youtube-playables-integration` hedef dizinine kopyala. Yalnız `SKILL.md` dosyasını
+`youtube-playables-guide` hedef dizinine kopyala. Yalnız `SKILL.md` dosyasını
 kopyalama; `references/` ve `scripts/` da gereklidir.
 
 ## 2. NPM gerekiyor mu?
@@ -150,4 +150,3 @@ Dependency/toolchain tespiti
 - [Test Suite guide and CSP](https://developers.google.com/youtube/gaming/playables/reference/test_suite_guide)
 - [Developer Portal testing workflow](https://developers.google.com/youtube/gaming/playables/developer_portal)
 - [Revision history](https://developers.google.com/youtube/gaming/playables/certification/revisionhistory)
-

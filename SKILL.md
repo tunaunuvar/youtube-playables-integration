@@ -1,9 +1,9 @@
 ---
-name: youtube-playables-integration
-description: Prepare, integrate, audit, package, and test HTML5, Canvas, WebGL, Unity WebGL, Godot Web, or Flutter Web games for YouTube Playables. Use for SDK integration, certification readiness, game-design compliance, privacy review, monetization, bundle validation, Test Suite preparation, and Developer Portal release work; not for ordinary YouTube video embeds or native mobile builds.
+name: youtube-playables-guide
+description: Guide AI agents through preparing, integrating, auditing, packaging, and testing HTML5, Canvas, WebGL, Unity WebGL, Godot Web, or Flutter Web games for YouTube Playables. Use for SDK implementation, certification readiness, game-design compliance, privacy review, monetization, bundle validation, Test Suite preparation, and Developer Portal release work; not for ordinary YouTube video embeds or native mobile builds.
 ---
 
-# YouTube Playables Integration
+# YouTube Playables Guide
 
 Bu skill, mevcut bir web oyununun YouTube Playables'a teknik olarak entegre
 edilmesini ve certification öncesi uçtan uca denetlenmesini sağlar. Dosya, sınıf

@@ -1,7 +1,21 @@
-# YouTube Playables Integration
+# YouTube Playables Guide
 
-A reusable Codex skill for adapting, auditing, packaging, and testing web games
-for YouTube Playables.
+An AI-agent skill repository for adapting, auditing, packaging, and testing web
+games for YouTube Playables. It combines actionable agent instructions,
+human-readable guidance, official-source references, a release checklist, and a
+dependency-free bundle validator.
+
+## What this repository is
+
+This is primarily a **Codex skill**: install the complete repository and invoke
+`$youtube-playables-guide` in a game project. The agent is instructed to inspect
+the actual project, preserve its engine and package manager, implement the
+integration, run available checks, and return an evidence-based readiness
+report—not merely explain the API.
+
+The Markdown references are also useful as standalone documentation. Other AI
+agents can consume them when their skill system supports a `SKILL.md`-style
+instruction package, but product-specific installation may differ.
 
 The skill covers the full path from an existing HTML5/Canvas/WebGL or engine web
 export to a certification-readiness report:
@@ -22,19 +36,19 @@ After publishing the repository, replace `<owner>` with the GitHub account or
 organization name and clone the complete repository:
 
 ```powershell
-git clone https://github.com/<owner>/youtube-playables-integration.git "$env:USERPROFILE\.codex\skills\youtube-playables-integration"
+git clone https://github.com/<owner>/youtube-playables-guide.git "$env:USERPROFILE\.codex\skills\youtube-playables-guide"
 ```
 
 On macOS/Linux:
 
 ```bash
-git clone https://github.com/<owner>/youtube-playables-integration.git "${CODEX_HOME:-$HOME/.codex}/skills/youtube-playables-integration"
+git clone https://github.com/<owner>/youtube-playables-guide.git "${CODEX_HOME:-$HOME/.codex}/skills/youtube-playables-guide"
 ```
 
 Invoke it explicitly with:
 
 ```text
-$youtube-playables-integration
+$youtube-playables-guide
 ```
 
 It can also be selected automatically for YouTube Playables integration,
@@ -49,7 +63,7 @@ dependency commands, local serving, and the full test sequence.
 ## Repository structure
 
 ```text
-youtube-playables-integration/
+youtube-playables-guide/
 ├── SKILL.md
 ├── agents/openai.yaml
 ├── scripts/

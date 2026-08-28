@@ -1,7 +1,7 @@
 interface:
-  display_name: "YouTube Playables Integration"
-  short_description: "Prepare web games for YouTube Playables"
-  default_prompt: "Use $youtube-playables-integration to adapt, audit, package, and test this web game for YouTube Playables."
+  display_name: "YouTube Playables Guide"
+  short_description: "Guide games through YouTube Playables"
+  default_prompt: "Use $youtube-playables-guide to adapt, audit, package, and test this web game for YouTube Playables."
 
 policy:
   allow_implicit_invocation: true
