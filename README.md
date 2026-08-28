@@ -1,54 +1,95 @@
 # YouTube Playables Integration
 
-Reusable Codex skill for adapting browser-based HTML5 games to the YouTube
-Playables SDK.
+A reusable Codex skill for adapting, auditing, packaging, and testing web games
+for YouTube Playables.
 
-## Included
+The skill covers the full path from an existing HTML5/Canvas/WebGL or engine web
+export to a certification-readiness report:
 
-- SDK loading order and Playables lifecycle
-- `playablesBridge` adapter pattern
-- Cloud save/load, versioned schema and migration
-- Canonical score submission
-- Host pause/resume and audio synchronization
-- Rewarded ads with safe reward claiming
-- Release bundle, CSP and size validation
-- Local bridge tests and Playables Test Suite checklist
+- Playables SDK lifecycle and environment detection
+- Cloud save/load, migration, canonical scores, host pause and audio
+- Rewarded and interstitial ads through YouTube APIs
+- Privacy, external-call and personal-data restrictions
+- Responsive game design, touch/mouse input and accessibility
+- Bundle limits, relative paths, filenames, CSP and release ZIP validation
+- Unity WebGL, Godot Web, Flutter Web and standard HTML5 notes
+- Test Suite, real-device QA, Developer Portal and certification workflow
+- Trust & Safety, audience, metadata and rights checks
 
 ## Install as a Codex skill
 
-Copy this folder to the local Codex skills directory:
+Copy this repository to the local Codex skills directory:
 
 ```text
 Windows: %USERPROFILE%\.codex\skills\youtube-playables-integration
 macOS/Linux: ~/.codex/skills/youtube-playables-integration
 ```
 
-Then invoke it explicitly with:
+Invoke it explicitly with:
 
 ```text
 $youtube-playables-integration
 ```
 
-The skill is also eligible for automatic invocation when a task is clearly
-about integrating an HTML5 game with YouTube Playables.
+It can also be selected automatically for YouTube Playables integration,
+compliance, packaging, and certification-readiness tasks.
 
-## Contents
+## Repository structure
 
 ```text
 youtube-playables-integration/
 ├── SKILL.md
 ├── agents/openai.yaml
-└── references/implementation-guide.md
+├── scripts/
+│   └── validate_playables_bundle.py
+├── tests/
+│   └── test_validator.py
+└── references/
+    ├── official-requirements.md
+    ├── implementation-guide.md
+    ├── game-design-and-accessibility.md
+    ├── engine-notes.md
+    ├── release-and-certification.md
+    └── preflight-checklist.md
 ```
 
-This is an evolving integration guide. Portal onboarding, certification, full
-device QA, remote leaderboards and future monetization work remain separate
-follow-up areas.
+## Bundle validator
 
-## Official documentation
+Run the dependency-free validator against a release directory or ZIP:
 
+```bash
+python scripts/validate_playables_bundle.py path/to/release
+python scripts/validate_playables_bundle.py path/to/release.zip
+```
+
+It checks the root entry point, SDK order, file count, total and individual file
+sizes, filename characters, relative references, external URLs, and common debug
+artifacts. Runtime behavior, initial network transfer size, save size, rights,
+Portal metadata, and certification still require manual or hosted testing.
+
+Run the validator tests with:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## Authority and freshness
+
+Official English Google/YouTube documentation is authoritative. The bundled
+research snapshot was reviewed on **2026-08-28** and deliberately links every
+requirement group back to its source. Always check the official
+[revision history](https://developers.google.com/youtube/gaming/playables/certification/revisionhistory)
+before submission.
+
+## Core official sources
+
+- [Playables overview](https://developers.google.com/youtube/gaming/playables)
 - [Getting started](https://developers.google.com/youtube/gaming/playables/reference/getting_started)
 - [SDK reference](https://developers.google.com/youtube/gaming/playables/reference/sdk)
-- [Integration requirements](https://developers.google.com/youtube/gaming/playables/certification/requirements_integration)
-- [Monetization](https://developers.google.com/youtube/gaming/playables/reference/monetization)
-- [Stability and performance](https://developers.google.com/youtube/gaming/playables/certification/requirements_stability)
+- [Certification requirements](https://developers.google.com/youtube/gaming/playables/certification/requirements)
+- [Test Suite guide](https://developers.google.com/youtube/gaming/playables/reference/test_suite_guide)
+- [Developer Portal](https://developers.google.com/youtube/gaming/playables/developer_portal)
+- [Official web-game samples](https://github.com/google/web-game-samples)
+
+This repository provides implementation guidance and automated preflight checks;
+it does not guarantee acceptance by YouTube.

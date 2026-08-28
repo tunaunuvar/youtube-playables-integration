@@ -93,13 +93,15 @@ Oyunun mevcut save sistemini önce versioned bir JSON schema'ya getir:
   "unlockedSkins": ["classic"],
   "equippedSkin": "classic",
   "bestScoreClassic": 0,
-  "leaderboard": { "classic": [] },
-  "playerName": "PLAYER"
+  "runHistory": { "classic": [] }
 }
 ```
 
 Gerçek oyunun ihtiyaç duyduğu alanları ekle; örnekteki alanları gereksiz yere
-kopyalama. Load sırasında:
+kopyalama. İsim, kullanıcı adı, yaş veya konum gibi kişisel bilgi isteme ya da
+save'e ekleme. Sling Dunk'teki eski `playerName` alanı Playables release'inde
+kaldırılmalı; yalnızca sabit, anonim bir UI etiketi gerekiyorsa save dışında
+tutulmalıdır. Load sırasında:
 
 1. Host'ta `loadData()` sonucunu, local'de primary ve legacy key'leri oku.
 2. JSON parse hatasında güvenli default state'e düş.
@@ -175,9 +177,11 @@ isHostPaused
 loopStoppedByHost
 ```
 
-Host pause sırasında `update()` çağrısı, timer, physics, input, particle ve ses
-ilerlememeli. Resume'da `lastTime = performance.now()` ile büyük bir delta
-oluşmasını önle; loop durduysa yalnızca bir yeni animation frame planla.
+Host pause sırasında `update()` çağrısı, timer, physics, rendering, input,
+particle, ses ve network ilerlememeli. Page Visibility API'yi host pause kaynağı
+olarak kullanma. Resume yalnız `onResume` ile yapılmalı; callback gelmesinin
+garanti olmadığını varsay. Resume'da `lastTime = performance.now()` ile büyük bir
+delta oluşmasını önle; loop durduysa yalnızca bir yeni animation frame planla.
 
 Audio katmanı iki kaynağı birleştirmeli:
 
@@ -238,6 +242,11 @@ Playables benzeri CSP ile local server çalıştırılabilir. Sunucu cache'i kap
 ve test CSP'sini opsiyonel flag ile eklemelidir; normal local geliştirmeyi
 gereksiz yere kısıtlama.
 
+Analytics, remote database, remote leaderboard, remote asset/level ve custom
+telemetry endpoint'lerini release'ten çıkar. Yazılı bir pilot istisnası yoksa
+YouTube'un açıkça istediği Google/YouTube API'leri dışındaki ağ çağrılarını yayın
+engeli say.
+
 ## 9. Test sırası
 
 Önce hızlı statik ve bridge kontrolleri:
@@ -266,14 +275,15 @@ audio toggle, resize/touch, ad unavailable/error/cancel ve reward duplicate
 senaryolarını test et. En sonda desktop web, mobile web, Android/iOS YouTube ve
 Playables Test Suite üzerinde doğrula.
 
-## 10. Bu snapshot'ta bilinçli olarak kapsam dışı kalanlar
+## 10. Bu snapshot'ta projeye özel olarak tamamlanmamış alanlar
 
 Sling Dunk uygulamasının bu aşamasında aşağıdakiler tamamlanmış entegrasyon
 parçası sayılmamalı:
 
 - Global/remote leaderboard backend'i.
 - Analytics veya harici skor/save endpoint'i.
-- Developer Portal onboarding ve certification sonucu.
+- Developer Portal onboarding ve certification sonucu (skill akışı kapsar,
+  fakat Sling Dunk için henüz tamamlanmış değildir).
 - Tüm resmi Test Suite cihaz kontrolleri.
 - Bozuk/kota aşımı save için son kullanıcıya özel UX.
 - Production'da local rewarded-ad simülasyonunun tamamen kaldırılması.
@@ -288,3 +298,5 @@ Bu konular yeni bir sonraki iterasyonda ayrı karar ve test gerektirir.
 - [Monetization / rewarded ads](https://developers.google.com/youtube/gaming/playables/reference/monetization)
 - [Stability and performance](https://developers.google.com/youtube/gaming/playables/certification/requirements_stability)
 - [Certification requirements](https://developers.google.com/youtube/gaming/playables/certification/requirements)
+- [Privacy and data](https://developers.google.com/youtube/gaming/playables/certification/requirements_privacydata)
+- [Test Suite guide](https://developers.google.com/youtube/gaming/playables/reference/test_suite_guide)

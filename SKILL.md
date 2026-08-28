@@ -1,65 +1,92 @@
 ---
 name: youtube-playables-integration
-description: Integrate browser-based HTML5 games with the YouTube Playables SDK, including lifecycle, cloud save, score submission, host pause/audio, rewarded ads, release packaging, and local validation. Use when adapting an existing web game for YouTube Playables; not for YouTube video embeds or native mobile SDKs.
+description: Prepare, integrate, audit, package, and test HTML5, Canvas, WebGL, Unity WebGL, Godot Web, or Flutter Web games for YouTube Playables. Use for SDK integration, certification readiness, game-design compliance, privacy review, monetization, bundle validation, Test Suite preparation, and Developer Portal release work; not for ordinary YouTube video embeds or native mobile builds.
 ---
 
 # YouTube Playables Integration
 
-Bu skill, mevcut bir HTML5/Canvas/WebGL oyununun YouTube Playables ortamına
-uyarlanmasını yönlendirir. Projeye göre dosya ve sınıf adlarını uyarla; Sling
-Dunk'teki isimleri körlemesine kopyalama.
+Bu skill, mevcut bir web oyununun YouTube Playables'a teknik olarak entegre
+edilmesini ve certification öncesi uçtan uca denetlenmesini sağlar. Dosya, sınıf
+ve build sistemi adlarını hedef projeye göre uyarla; örnek projedeki isimleri
+körlemesine kopyalama.
 
-## Çalışma kuralları
+## Kaynak otoritesi
 
-- Önce giriş dosyasını, script sırasını, mevcut save modelini, oyun döngüsünü,
-  skor kaynağını, ses katmanını ve reklam akışını incele.
-- YouTube API çağrılarını tek bir bridge/adapter arkasında tut. Oyun modülleri
-  doğrudan `ytgame` çağırmamalı.
-- Yerel tarayıcıda SDK olmadan çalışan bir fallback bırak. Fallback, Playables
-  cloud save yerine local storage kullanabilir; Playables ortamında local
-  storage'ı progress kaynağı kabul etme.
-- `firstFrameReady()` görünür loading/splash frame'inden sonra; `gameReady()`
-  yalnızca oyun gerçekten etkileşimliyken ve loading ekranı kaldırılmışken,
-  üstelik ilkinden sonra çağrılmalı.
-- `loadData()` tamamlanmadan `saveData()` çağırma. Save çağrılarını sıraya al,
-  hataları oyun akışını kilitlemeden raporla.
-- YouTube'a gönderilen skor, oyunun kalıcı best score değeriyle aynı canonical
-  integer olmalı; her frame veya her popup'ta skor gönderme.
-- `requestRewardedAd()` sonucu `true` olmadan ödülü verme. Her ödül tipi için
-  kullanıcı verisi içermeyen sabit ve benzersiz bir reward ID kullan.
-- Host pause durumunda update/timer/physics/input/particle/ses akışını durdur;
-  resume'da önceki state'i koruyarak devam ettir.
-- Release bundle'da yalnızca relative dosya yolları, gerekli runtime dosyaları
-  ve izin verilen dış SDK URL'si bulunmalı. Debug paneli, cheat ve local reklam
-  simülasyonu release'e sızmamalı.
-- Resmi Playables dokümanlarını ve güncel limitleri görev sırasında doğrula;
-  bu skill bir certification onayı değildir.
+- Görev başında resmi İngilizce Playables gereksinimlerini ve
+  [revision history](https://developers.google.com/youtube/gaming/playables/certification/revisionhistory)
+  sayfasını kontrol et. Kurallar sık değiştiği için bu skill'deki tarihli
+  snapshot'ı tek başına son söz kabul etme.
+- Zorunlu kurallar için yalnızca Google/YouTube'un resmi dokümanlarını kaynak
+  kabul et. Resmi GitHub örnekleri ve üçüncü taraf template'ler uygulama örneği
+  olabilir; certification kuralı belirleyemez.
+- `MUST`/`MUST NOT` yayın engeli, `SHOULD` güçlü öneri, `MAY` opsiyon olarak ele
+  alınmalı. Belirsizliği zorunlu kural gibi sunma.
+- Portal erişimi veya gerçek cihaz/Test Suite sonucu görülmeden "certification
+  ready" ya da "certification passed" deme.
 
-## Uygulama akışı
+## Her görevde uygulanacak kapılar
 
-1. Projeyi keşfet ve Playables'a gidecek tek web runtime'ı belirle.
-2. HTML girişinde SDK'yı tüm oyun kodundan önce yükle; görünür loading UI ekle.
-3. `playablesBridge` benzeri adapter'ı oluştur ve aşağıdaki yüzeyi uygula:
-   `isInPlayables()`, `initialize()`, `getInitialSave()`, `saveData()`,
-   `sendScore()`, `requestRewardedAd()`, `sendGameReady()` ve runtime binding.
-4. Bootstrap sırasında bridge'i initialize et, cloud save'i yükle, sonra oyun
-   yöneticilerini oluştur ve bridge'e bind et.
-5. Save schema'sını version'la; eski key/alan/ID'leri migrate et; material
-   progress anlarında save et.
-6. Oyun döngüsüne host pause/resume, ses katmanına host audio state, skor akışına
-   best-score gönderimi ve reklam akışına rewarded adapter bağla.
-7. Release builder ile debug ayıklanmış bundle ve ZIP üret; dosya adı, relative
-   path, SDK sırası, dış URL ve boyut kontrollerini çalıştır.
-8. Bridge unit testini, temiz profil testini ve Playables Test Suite cihaz
-   testlerini çalıştır; certification tamamlandı iddiasında bulunma.
+- Playables runtime'ı bir SPA ve standart web build'i olmalı; root'ta
+  `index.html` bulunmalı.
+- SDK bütün oyun kodundan önce yüklenmeli ve `window.ytgame` ezilmemeli.
+- Playables ortamında progress yalnızca `loadData()`/`saveData()` ile tutulmalı;
+  cloud load tamamlanmadan save yapılmamalı.
+- Oyun harici URL, analytics, remote config, CDN, database veya özel leaderboard
+  çağrısı yapmamalı. Yalnızca açıkça gerekli Google/YouTube API'leri istisnadır.
+- Oyun isim, kullanıcı adı, yaş, konum, parola veya başka kişisel bilgi
+  istememeli/toplamamalı; login, hesap oluşturma ve QR benzeri ekran göstermemeli.
+- Touch ve mouse bütün etkileşimlerde çalışmalı; oyun viewport değişince state
+  kaybetmemeli ve orientation/posture kilitlememeli.
+- Host pause tüm execution'ı; YouTube mute bütün ses çıkışını durdurmalı.
+- Off-platform reklam, ödeme veya satın alma eklenmemeli. Reklam varsa yalnızca
+  YouTube ads API'leri ve eşleşen Portal ayarları kullanılmalı.
+- İçerik 13+ genel kitleye uygun, özgün/yetkili/lisanslı olmalı; çocuklara özel,
+  yanıltıcı, duplicate veya hakları temizlenmemiş build yayınlanmamalı.
 
-Core bridge ve Sling Dunk'te doğrulanmış uygulama noktaları için
-[implementation-guide.md](references/implementation-guide.md) dosyasını oku.
+## Referans yönlendirmesi
 
-## Bu skill'in mevcut kapsamı
+- Her planlama veya audit görevinde
+  [official-requirements.md](references/official-requirements.md) dosyasını oku.
+- SDK bridge, lifecycle, cloud save, score, pause/audio veya ads kodlarken
+  [implementation-guide.md](references/implementation-guide.md) dosyasını oku.
+- Responsive UI, input, onboarding veya accessibility çalışırken
+  [game-design-and-accessibility.md](references/game-design-and-accessibility.md)
+  dosyasını oku.
+- Unity, Godot, Flutter ya da framework export'u uyarlarken
+  [engine-notes.md](references/engine-notes.md) dosyasını oku.
+- ZIP, CSP, Test Suite, metadata, Portal veya certification işlerinde
+  [release-and-certification.md](references/release-and-certification.md)
+  dosyasını oku.
+- Teslimden önce [preflight-checklist.md](references/preflight-checklist.md)
+  dosyasını uygula. Bundle varsa `scripts/validate_playables_bundle.py` çalıştır.
 
-Bu sürüm lifecycle, cloud save/load, versioned migration, canonical score,
-host pause/resume, host audio, rewarded ad çağrı noktası, local fallback,
-release packaging ve temel testleri kapsar. Leaderboard backend'i, analytics,
-portal onboarding, certification, tam mobile QA ve sonraki monetization
-iyileştirmeleri bu sürümün dışında bırakılmıştır.
+## Çalışma akışı
+
+1. Runtime, engine/framework, giriş HTML'i, build output'u, asset yolları,
+   storage, score, game loop, audio, input ve monetization noktalarını çıkar.
+2. İlk olarak yayın engellerini ara: dış çağrılar, kişisel veri, login, remote
+   content, absolute path, unsupported filename, off-platform ads/IAP, debug ve
+   hakları belirsiz içerik.
+3. SDK'yı tek bir bridge/adapter arkasına al; lifecycle ve cloud load tamamlanana
+   kadar gameplay manager'larını başlatma.
+4. Save schema migration, canonical score, pause/resume, host audio ve gerekiyorsa
+   YouTube ads entegrasyonunu uygula.
+5. Responsive/input/accessibility gereksinimlerini gerçek viewport ve cihaz
+   davranışıyla ele al.
+6. Temiz release output'u üret; debug/cheat/local ad simulation dosyalarını çıkar.
+7. Bundle validator, syntax/unit test, CSP testi, temiz profil ve Test Suite
+   senaryolarını çalıştır.
+8. Portal gerektiren kontrolleri ayrı işaretle; tahmin ederek PASS verme.
+
+## Teslim formatı
+
+Sonuçta kısa bir readiness raporu ver:
+
+- `PASS`: Kod veya üretilen artifact ile doğrulandı.
+- `FAIL`: Somut ihlal var; dosya/konum ve düzeltme belirtilmeli.
+- `NEEDS PORTAL`: Developer Portal, uploaded build veya gerçek YouTube ortamı
+  gerekiyor.
+- `UNVERIFIED`: Manuel cihaz, hak sahipliği ya da kullanıcı kararı gerekiyor.
+
+Değişen dosyaları, çalıştırılan testleri, kalan blokları ve ilgili resmi kaynak
+linklerini rapora ekle. Otomatik testlerin kapsamını aşan bir onay verme.
